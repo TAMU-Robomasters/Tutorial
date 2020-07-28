@@ -57,6 +57,10 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void LEDtask_entry(void *argument){
+	HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+	osDelay(500);
+}
 
 /* USER CODE END 0 */
 
