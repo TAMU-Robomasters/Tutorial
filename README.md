@@ -2,8 +2,12 @@
 
 Dev guide for type A board
 
-Week 1: GPIO, LED
+Week 0: Port Information
 
-Week 2: timer
+Week 1: CubeMX, Keil uvision, GPIO, LED
 
-Refer to PDFs for more detailed instructions.
+Week 2: Timer
+
+Week 3: freeRTOS, PWM, Passive Buzzer, USB
+
+Refer to the PDFs for more detailed instructions.

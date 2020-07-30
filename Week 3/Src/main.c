@@ -22,11 +22,12 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "tim.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,7 +88,7 @@ void buzzer_off(void)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	uint8_t buffer[] = "Hello Wilson\n\r";
   /* USER CODE END 1 */
   
 
@@ -111,6 +112,14 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
+	MX_USB_DEVICE_Init();
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	CDC_Transmit_FS(buffer, sizeof(buffer));
+	
 	HAL_TIM_Base_Start_IT(&htim12);
 	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
 	
@@ -183,7 +192,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 6;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
