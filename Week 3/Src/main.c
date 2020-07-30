@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -66,6 +67,17 @@ void LEDtask_entry(void *argument){
 	
 }
 
+void buzzer_on(uint16_t psc, uint16_t pwm){
+	__HAL_TIM_PRESCALER(&htim12, psc);
+  __HAL_TIM_SetCompare(&htim12, TIM_CHANNEL_1, pwm);
+}
+
+void buzzer_off(void)
+{
+  __HAL_TIM_SetCompare(&htim12, TIM_CHANNEL_1, 0);
+}
+
+
 /* USER CODE END 0 */
 
 /**
@@ -97,8 +109,35 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_TIM_Base_Start_IT(&htim12);
+	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
+	
+	// family mart tune
+	buzzer_on(24, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(250);
+	buzzer_on(42, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(250);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(20, 5000);
+	HAL_Delay(500);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(24, 5000);
+	HAL_Delay(250);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(42, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(1000);
+	buzzer_off();
   /* USER CODE END 2 */
   /* Init scheduler */
   osKernelInitialize();
