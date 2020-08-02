@@ -55,6 +55,13 @@ const osThreadAttr_t LEDtask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128
 };
+/* Definitions for USBtask */
+osThreadId_t USBtaskHandle;
+const osThreadAttr_t USBtask_attributes = {
+  .name = "USBtask",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 128
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -62,6 +69,7 @@ const osThreadAttr_t LEDtask_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void LEDtask_entry(void *argument);
+void USBtask_entry(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -96,6 +104,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of LEDtask */
   LEDtaskHandle = osThreadNew(LEDtask_entry, NULL, &LEDtask_attributes);
 
+  /* creation of USBtask */
+  USBtaskHandle = osThreadNew(USBtask_entry, NULL, &USBtask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -120,6 +131,24 @@ __weak void LEDtask_entry(void *argument)
     osDelay(1);
   }
   /* USER CODE END LEDtask_entry */
+}
+
+/* USER CODE BEGIN Header_USBtask_entry */
+/**
+* @brief Function implementing the USBtask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_USBtask_entry */
+__weak void USBtask_entry(void *argument)
+{
+  /* USER CODE BEGIN USBtask_entry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END USBtask_entry */
 }
 
 /* Private application code --------------------------------------------------*/

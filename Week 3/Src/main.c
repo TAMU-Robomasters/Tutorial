@@ -78,6 +78,15 @@ void buzzer_off(void)
   __HAL_TIM_SetCompare(&htim12, TIM_CHANNEL_1, 0);
 }
 
+void USBtask_entry(void *argument){
+	uint8_t buffer[] = "Hello Wilson\n\r";
+	//MX_USB_DEVICE_Init();
+	while(1){
+		CDC_Transmit_FS(buffer, sizeof(buffer));
+		osDelay(2000);
+	}
+}
+
 
 /* USER CODE END 0 */
 
@@ -113,11 +122,6 @@ int main(void)
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
 	MX_USB_DEVICE_Init();
-	CDC_Transmit_FS(buffer, sizeof(buffer));
-	CDC_Transmit_FS(buffer, sizeof(buffer));
-	CDC_Transmit_FS(buffer, sizeof(buffer));
-	CDC_Transmit_FS(buffer, sizeof(buffer));
-	CDC_Transmit_FS(buffer, sizeof(buffer));
 	CDC_Transmit_FS(buffer, sizeof(buffer));
 	
 	HAL_TIM_Base_Start_IT(&htim12);
