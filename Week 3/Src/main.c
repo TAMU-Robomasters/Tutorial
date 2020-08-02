@@ -87,6 +87,36 @@ void USBtask_entry(void *argument){
 	}
 }
 
+void Buzzertask_entry(void *argument){
+	// family mart tune
+	buzzer_on(24, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(250);
+	buzzer_on(42, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(250);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(20, 5000);
+	HAL_Delay(500);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(24, 5000);
+	HAL_Delay(250);
+	buzzer_on(27, 5000);
+	HAL_Delay(250);
+	buzzer_on(42, 5000);
+	HAL_Delay(250);
+	buzzer_on(31, 5000);
+	HAL_Delay(1000);
+	
+	while(1){
+		buzzer_off();
+	}
+	
+}
 
 /* USER CODE END 0 */
 
@@ -97,7 +127,7 @@ void USBtask_entry(void *argument){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	uint8_t buffer[] = "Hello Wilson\n\r";
+	
   /* USER CODE END 1 */
   
 
@@ -122,35 +152,11 @@ int main(void)
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
 	MX_USB_DEVICE_Init();
-	CDC_Transmit_FS(buffer, sizeof(buffer));
 	
 	HAL_TIM_Base_Start_IT(&htim12);
 	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
 	
-	// family mart tune
-	buzzer_on(24, 5000);
-	HAL_Delay(250);
-	buzzer_on(31, 5000);
-	HAL_Delay(250);
-	buzzer_on(42, 5000);
-	HAL_Delay(250);
-	buzzer_on(31, 5000);
-	HAL_Delay(250);
-	buzzer_on(27, 5000);
-	HAL_Delay(250);
-	buzzer_on(20, 5000);
-	HAL_Delay(500);
-	buzzer_on(27, 5000);
-	HAL_Delay(250);
-	buzzer_on(24, 5000);
-	HAL_Delay(250);
-	buzzer_on(27, 5000);
-	HAL_Delay(250);
-	buzzer_on(42, 5000);
-	HAL_Delay(250);
-	buzzer_on(31, 5000);
-	HAL_Delay(1000);
-	buzzer_off();
+	
   /* USER CODE END 2 */
   /* Init scheduler */
   osKernelInitialize();

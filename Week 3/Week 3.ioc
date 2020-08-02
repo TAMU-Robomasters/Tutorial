@@ -1,7 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
 FREERTOS.IPParameters=Tasks01,FootprintOK
-FREERTOS.Tasks01=LEDtask,24,128,LEDtask_entry,As weak,NULL,Dynamic,NULL,NULL;USBtask,8,128,USBtask_entry,As weak,NULL,Dynamic,NULL,NULL
+FREERTOS.Tasks01=LEDtask,24,128,LEDtask_entry,As weak,NULL,Dynamic,NULL,NULL;USBtask,8,128,USBtask_entry,As weak,NULL,Dynamic,NULL,NULL;Buzzertask,8,128,Buzzertask_entry,As weak,NULL,Dynamic,NULL,NULL
 File.Version=6
 GPIO.groupedBy=Group By Peripherals
 KeepUserPlacement=false
