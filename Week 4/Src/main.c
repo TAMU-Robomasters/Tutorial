@@ -73,7 +73,7 @@ void USBtask_entry(void *argument){
 	//MX_USB_DEVICE_Init();
 	while(1){
 		CDC_Transmit_FS(buffer, sizeof(buffer));
-		osDelay(2000);
+		osDelay(5000);
 	}
 }
 
@@ -94,7 +94,19 @@ void Buzzertask_entry(void *argument){
 		buzzer_off();
 		osDelay(1);
 	}
+}
+
+void Servotask_entry(void *argument){
 	
+	while(1){
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 1000);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1000);
+	osDelay(5000);
+		
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 2000);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 2000);
+		osDelay(5000);
+	}	
 }
 /* USER CODE END 0 */
 
@@ -128,11 +140,17 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM12_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
 	MX_USB_DEVICE_Init();
 	
 	HAL_TIM_Base_Start_IT(&htim12);
 	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
+	
+	HAL_TIM_Base_Start_IT(&htim5);
+	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_4);
+	
 	
   /* USER CODE END 2 */
   /* Init scheduler */

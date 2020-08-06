@@ -69,6 +69,13 @@ const osThreadAttr_t Buzzertask_attributes = {
   .priority = (osPriority_t) osPriorityLow,
   .stack_size = 128
 };
+/* Definitions for Servotask */
+osThreadId_t ServotaskHandle;
+const osThreadAttr_t Servotask_attributes = {
+  .name = "Servotask",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 128
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -78,6 +85,7 @@ const osThreadAttr_t Buzzertask_attributes = {
 void LEDtask_entry(void *argument);
 void USBtask_entry(void *argument);
 void Buzzertask_entry(void *argument);
+void Servotask_entry(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -117,6 +125,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of Buzzertask */
   BuzzertaskHandle = osThreadNew(Buzzertask_entry, NULL, &Buzzertask_attributes);
+
+  /* creation of Servotask */
+  ServotaskHandle = osThreadNew(Servotask_entry, NULL, &Servotask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -178,6 +189,24 @@ __weak void Buzzertask_entry(void *argument)
     osDelay(1);
   }
   /* USER CODE END Buzzertask_entry */
+}
+
+/* USER CODE BEGIN Header_Servotask_entry */
+/**
+* @brief Function implementing the Servotask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Servotask_entry */
+__weak void Servotask_entry(void *argument)
+{
+  /* USER CODE BEGIN Servotask_entry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Servotask_entry */
 }
 
 /* Private application code --------------------------------------------------*/
