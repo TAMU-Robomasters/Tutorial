@@ -27,7 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,7 +59,43 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void LEDtask_entry(void *argument){
+	
+	while(1){
+		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+		osDelay(500);
+	}
+	
+}
 
+void USBtask_entry(void *argument){
+	uint8_t buffer[] = "Hello Wilson\n\r";
+	//MX_USB_DEVICE_Init();
+	while(1){
+		CDC_Transmit_FS(buffer, sizeof(buffer));
+		osDelay(2000);
+	}
+}
+
+void buzzer_on(uint16_t psc, uint16_t pwm){
+	__HAL_TIM_PRESCALER(&htim12, psc);
+  __HAL_TIM_SetCompare(&htim12, TIM_CHANNEL_1, pwm);
+}
+
+void buzzer_off(void)
+{
+  __HAL_TIM_SetCompare(&htim12, TIM_CHANNEL_1, 0);
+}
+
+void Buzzertask_entry(void *argument){
+	buzzer_on(24, 5000);
+	HAL_Delay(250);
+	while(1){
+		buzzer_off();
+		osDelay(1);
+	}
+	
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,7 +129,11 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
-
+	MX_USB_DEVICE_Init();
+	
+	HAL_TIM_Base_Start_IT(&htim12);
+	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
+	
   /* USER CODE END 2 */
   /* Init scheduler */
   osKernelInitialize();
