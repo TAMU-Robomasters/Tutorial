@@ -76,6 +76,13 @@ const osThreadAttr_t Servotask_attributes = {
   .priority = (osPriority_t) osPriorityLow,
   .stack_size = 128
 };
+/* Definitions for Buttontask */
+osThreadId_t ButtontaskHandle;
+const osThreadAttr_t Buttontask_attributes = {
+  .name = "Buttontask",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 128
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -86,6 +93,7 @@ void LEDtask_entry(void *argument);
 void USBtask_entry(void *argument);
 void Buzzertask_entry(void *argument);
 void Servotask_entry(void *argument);
+void Buttontask_entry(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -128,6 +136,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of Servotask */
   ServotaskHandle = osThreadNew(Servotask_entry, NULL, &Servotask_attributes);
+
+  /* creation of Buttontask */
+  ButtontaskHandle = osThreadNew(Buttontask_entry, NULL, &Buttontask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -207,6 +218,24 @@ __weak void Servotask_entry(void *argument)
     osDelay(1);
   }
   /* USER CODE END Servotask_entry */
+}
+
+/* USER CODE BEGIN Header_Buttontask_entry */
+/**
+* @brief Function implementing the Buttontask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Buttontask_entry */
+__weak void Buttontask_entry(void *argument)
+{
+  /* USER CODE BEGIN Buttontask_entry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Buttontask_entry */
 }
 
 /* Private application code --------------------------------------------------*/

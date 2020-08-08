@@ -99,15 +99,29 @@ void Buzzertask_entry(void *argument){
 void Servotask_entry(void *argument){
 	
 	while(1){
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1600);
 	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 1000);
 	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1000);
 	osDelay(5000);
 		
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1700);	
 	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 2000);
 	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 2000);
 		osDelay(5000);
 	}	
 }
+
+void Buttontask_entry(void *argument){
+	while(1){
+		if (HAL_GPIO_ReadPin(GPIOB, Custom_Button_Pin) == GPIO_PIN_SET){
+			HAL_GPIO_WritePin(Button_LED_GPIO_Port, Button_LED_Pin, GPIO_PIN_RESET);
+		}
+		else{
+			HAL_GPIO_WritePin(Button_LED_GPIO_Port, Button_LED_Pin, GPIO_PIN_SET);
+		}
+	}
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -148,9 +162,9 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);
 	
 	HAL_TIM_Base_Start_IT(&htim5);
+	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_4);
-	
 	
   /* USER CODE END 2 */
   /* Init scheduler */

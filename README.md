@@ -10,4 +10,6 @@ Week 2: Timer
 
 Week 3: freeRTOS, PWM, Passive Buzzer, USB
 
+Week 4: Servo, buttons
+
 Refer to the PDFs for more detailed instructions.
