@@ -12,4 +12,6 @@ Week 3: freeRTOS, PWM, Passive Buzzer, USB
 
 Week 4: Servo, buttons
 
+Week 6: DMA, remote control
+
 Refer to the PDFs for more detailed instructions.

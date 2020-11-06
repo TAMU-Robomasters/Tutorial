@@ -99,14 +99,14 @@ void Buzzertask_entry(void *argument){
 void Servotask_entry(void *argument){
 	
 	while(1){
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1600);
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 1000);
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1000);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1200);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 1200);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1200);
 	osDelay(5000);
 		
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1700);	
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 2000);
-	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 2000);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, 1600);	
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, 1600);
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1600);
 		osDelay(5000);
 	}	
 }
